@@ -1,0 +1,59 @@
+{
+  "name": "@first-line/firstline-angular",
+  "version": "1.0.2",
+  "description": "Firstline SDK for Angular Single Page Applications (SPA)",
+  "keywords": [
+    "Firstline",
+    "login",
+    "Authorization Code Grant Flow",
+    "PKCE",
+    "Single Page Application authentication",
+    "SPA authentication",
+    "angular"
+  ],
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "start:local": "concurrently --raw --kill-others --success first npm:start:local:oidc npm:start:local:playground",
+    "start:local:oidc": "node scripts/oidc-provider",
+    "build": "ng build",
+    "build:prod": "ng build --configuration=production",
+    "lint": "ng lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firstline-idp/firstline-angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/firstline-idp/firstline-angular/issues"
+  },
+  "homepage": "https://github.com/firstline-idp/firstline-angular#readme",
+  "peerDependencies": {
+    "@angular/common": ">=13",
+    "@angular/core": ">=13",
+    "@angular/router": ">=13"
+  },
+  "dependencies": {
+    "@first-line/firstline-spa-js": "^1.0.2",
+    "tslib": "^2.4.1"
+  },
+  "schematics": "./schematics/collection.json",
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^13.3.11",
+    "@angular-eslint/builder": "13.5.0",
+    "@angular-eslint/eslint-plugin": "13.5.0",
+    "@angular-eslint/eslint-plugin-template": "13.5.0",
+    "@angular-eslint/schematics": "13.5.0",
+    "@angular-eslint/template-parser": "13.5.0",
+    "@angular/cli": "^13.3.9",
+    "@angular/compiler-cli": "^13.3.11",
+    "@cypress/schematic": "^2.4.0",
+    "@typescript-eslint/eslint-plugin": "5.27.1",
+    "@typescript-eslint/parser": "5.27.1",
+    "ng-packagr": "^13.3.1",
+    "typescript": "~4.6.4"
+  },
+  "main": "index.js",
+  "author": "Firstline",
+  "license": "MIT"
+}
