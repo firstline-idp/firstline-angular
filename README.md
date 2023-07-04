@@ -34,7 +34,7 @@ yarn add @first-line/firstline-angular
 
 ### Configuration
 
-Add the following code to your Angular project. Replace **DOMAIN**, **API_IDENTIFIER** and **CLIENT_ID** with the settings you configured in setup step. You can also find them in the Application's and API's "Configure" tab in your dashboard.
+Add the following code to your Angular project. Replace **DOMAIN**, **API_IDENTIFIER** and **CLIENT_ID** with the settings you configured in the setup step. You can also find them in the Application's and API's "Configure" tab in your dashboard.
 
 Furthermore, replace **API_URL** with the base URL of your secured API endpoints. For example, by specifying `http://localhost:8080/*` all calls to endpoints that start with `http://localhost:8080` have an Authorization header.
 
@@ -140,7 +140,7 @@ In this example, we assume that the API endpoint http://localhost:8080/posts exi
 ### Protect a page
 
 Create a component `SecureComponent` with secure UI content. Add the following code to `app-routing.module.ts`.
-If you implemented everything correct, unauthenticated users can no longer access `/secured`.
+If you have implemented everything correctly, unauthenticated users can no longer access `/secured`.
 
 ```ts
 // app-routing.module.ts
