@@ -1,9 +1,12 @@
 import { OnDestroy } from '@angular/core';
+import { LoginRedirectOptions as LoginRedirectOptionsSPA } from "@first-line/firstline-spa-js";
 import { Observable } from 'rxjs';
 import { Client } from './client';
 import { AppState } from './config';
 import { AuthState } from './state';
 import * as i0 from "@angular/core";
+export interface LoginWithRedirectOptions extends LoginRedirectOptionsSPA {
+}
 export declare class AuthService<TAppState extends AppState = AppState> implements OnDestroy {
     private client;
     private authState;
@@ -27,7 +30,7 @@ export declare class AuthService<TAppState extends AppState = AppState> implemen
      */
     readonly error$: Observable<Error>;
     /**
-     * Emits the value (if any) that was passed to the `loginRedirect` method call
+     * Emits the value (if any) that was passed to the `loginWithRedirect` method call
      * but only **after** `handleRedirectCallback` is first called
      */
     readonly appState$: Observable<TAppState>;
@@ -38,12 +41,12 @@ export declare class AuthService<TAppState extends AppState = AppState> implemen
     ngOnDestroy(): void;
     /**
      * ```js
-     * loginRedirect();
+     * loginWithRedirect(options);
      * ```
      *
-     * Performs a redirect
+     * Performs a login via redirect
      */
-    loginRedirect(): Observable<void>;
+    loginWithRedirect(options?: LoginWithRedirectOptions): Observable<void>;
     /**
      * ```js
      * logout();
@@ -54,7 +57,7 @@ export declare class AuthService<TAppState extends AppState = AppState> implemen
     logout(): Observable<void>;
     /**
      * ```js
-     * getAccessTokenSilently().subscribe(token => ...)
+     * getAccessToken().subscribe(token => ...)
      * ```
      *
      * If there's a valid token stored, return it. Otherwise, opens an
@@ -64,7 +67,7 @@ export declare class AuthService<TAppState extends AppState = AppState> implemen
      * will be valid according to their expiration times.
      *
      */
-    getAccessTokenSilently(): Observable<string | null>;
+    getAccessToken(): Observable<string | null>;
     static ɵfac: i0.ɵɵFactoryDeclaration<AuthService<any>, never>;
     static ɵprov: i0.ɵɵInjectableDeclaration<AuthService<any>>;
 }

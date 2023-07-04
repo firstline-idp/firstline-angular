@@ -1,5 +1,5 @@
-import { Injectable, Inject, OnDestroy } from '@angular/core';
-import { ExchangeCodeResponse } from "@first-line/firstline-spa-js";
+import { Injectable, OnDestroy, Inject } from '@angular/core';  // do not remove Inject import!!
+import { LoginRedirectOptions as LoginRedirectOptionsSPA } from "@first-line/firstline-spa-js";
 import {
   of,
   from,
@@ -14,9 +14,11 @@ import {
   catchError
 } from 'rxjs/operators';
 
-import { Client, ClientService } from './client';
+import { Client, ClientService } from './client';  // do not remove ClientService import!!
 import { AppState } from './config';
 import { AuthState } from './state';
+
+export interface LoginWithRedirectOptions extends LoginRedirectOptionsSPA { };
 
 @Injectable({
   providedIn: 'root',
@@ -49,7 +51,7 @@ export class AuthService<TAppState extends AppState = AppState>
   readonly error$ = this.authState.error$;
 
   /**
-   * Emits the value (if any) that was passed to the `loginRedirect` method call
+   * Emits the value (if any) that was passed to the `loginWithRedirect` method call
    * but only **after** `handleRedirectCallback` is first called
    */
   readonly appState$ = this.appStateSubject$.asObservable();
@@ -75,13 +77,15 @@ export class AuthService<TAppState extends AppState = AppState>
 
   /**
    * ```js
-   * loginRedirect();
+   * loginWithRedirect(options);
    * ```
    *
-   * Performs a redirect
+   * Performs a login via redirect
    */
-  loginRedirect(): Observable<void> {
-    return from(this.client.loginRedirect());
+  loginWithRedirect(
+    options?: LoginWithRedirectOptions
+  ): Observable<void> {
+    return from(this.client.loginRedirect(options));
   }
 
   /**
@@ -98,7 +102,7 @@ export class AuthService<TAppState extends AppState = AppState>
 
   /**
    * ```js
-   * getAccessTokenSilently().subscribe(token => ...)
+   * getAccessToken().subscribe(token => ...)
    * ```
    *
    * If there's a valid token stored, return it. Otherwise, opens an
@@ -108,7 +112,7 @@ export class AuthService<TAppState extends AppState = AppState>
    * will be valid according to their expiration times.
    *
    */
-  getAccessTokenSilently(): Observable<string | null> {
+  getAccessToken(): Observable<string | null> {
     return of(this.client).pipe(
       concatMap(client => client.getAccessToken()),
       tap((access_token) => {

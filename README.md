@@ -1,16 +1,18 @@
 # Firstline Angular
 
+This library enables you to add authentication to your Angular app.
+
 ## Helpful resources
 
-- [Quick setup](https://docs.firstline.sh/quicksetup?tab=angular) - our guide for quickly adding login, logout and user information to an Angular app using Firstline.
-- [Angular sample app](https://github.com/firstline-idp/firstline-angular) - a full-fledged Angular application integrated with Firstline.
+- [Quick setup](https://docs.firstline.sh/quicksetup/angular) - our guide for quickly adding login, logout and user information to an Angular app using Firstline.
+- [Angular sample app](https://github.com/firstline-idp/sample-firstline-angular) - a full-fledged Angular application integrated with Firstline.
 - [Firstline docs](https://docs.firstline.sh) - explore our docs site and learn more about Firstline.
 
 ## Getting started
 
 ### Setup Firstline Application & API
-1. Follow the [Quick setup](https://docs.firstline.sh/quicksetup?tab=angular) to configure a Firstline Application.
-2. Add a Firstline API as shown in [Secure API](https://docs.firstline.sh/secure-api?tab=angular).
+1. Follow the [Quick setup](https://docs.firstline.sh/quicksetup/angular) to configure a Firstline Application.
+2. Add a Firstline API as shown in [Secure API](https://docs.firstline.sh/secureapi).
 
 **Important:** Don't forget to configure the Application URIs.
 
@@ -27,6 +29,8 @@ Using yarn:
 ```sh
 yarn add @first-line/firstline-angular
 ```
+
+**Hint:** You can also try out our [Angular sample app](https://github.com/firstline-idp/sample-firstline-angular).
 
 ### Configuration
 
@@ -60,9 +64,12 @@ export class AppModule {}
 ```
 
 ### Add login, logout, isAuthenticated & user
+
+Implement the following component in your frontend and you have a fully functional login/logout.
+
 ```ts
 // home.component.ts
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '@first-line/firstline-angular';
 
 @Component({
@@ -74,7 +81,7 @@ export class NavBarComponent {
   constructor(public auth: AuthService) { }
 
   loginWithRedirect() {
-    this.auth.loginRedirect();
+    this.auth.loginWithRedirect();
   }
 
   logout() {
@@ -101,9 +108,15 @@ export class NavBarComponent {
 </ng-template>
 ```
 
+You can use the auth variable to
+- log in
+- log out
+- check if the user is signed in
+- retrieve the logged in user
+
 ### Make a secured backend call
 
-You now only need to implement the API call. Firstline will automatically inject an Authorization header into all calls with a URL starting with `API_URL`.
+You now only need to implement the API call. Firstline will automatically inject an Authorization header into all API calls that have a URL starting with `API_URL` (that you configured above).
 
 ```ts
 // api.service.ts
@@ -122,10 +135,12 @@ export class ApiService {
 }
 ```
 
+In this example, we assume that the API endpoint http://localhost:8080/posts exists.
+
 ### Protect a page
 
 Create a component `SecureComponent` with secure UI content. Add the following code to `app-routing.module.ts`.
-If you implemented everything correct, unauthenticated users can no longer access `/scured`.
+If you implemented everything correct, unauthenticated users can no longer access `/secured`.
 
 ```ts
 // app-routing.module.ts

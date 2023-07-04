@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate, CanLoad, CanActivateChild {
     return this.auth.isAuthenticated$.pipe(
       tap((loggedIn) => {
         if (!loggedIn) {
-          this.auth.loginRedirect();
+          this.auth.loginWithRedirect({ redirect_uri: state.url });
         }
       })
     );

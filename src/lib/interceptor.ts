@@ -23,7 +23,7 @@ import {
   isHttpInterceptorRouteConfig,
   AuthClientConfig,
   HttpInterceptorConfig,
-  GetTokenSilentlyOptions
+  GetTokenOptions
 } from './config';
 import { Client, ClientService } from './client';
 import { AuthState } from './state';
@@ -61,13 +61,13 @@ export class AuthHttpInterceptor implements HttpInterceptor {
         iif(
           // Check if a route was matched
           () => route !== null,
-          // If we have a matching route, call getTokenSilently and attach the token to the
+          // If we have a matching route, call getToken and attach the token to the
           // outgoing request
           of(route).pipe(
             waitUntil(isLoaded$),          
             pluck('tokenOptions'),
-            concatMap<GetTokenSilentlyOptions, Observable<string>>(() =>
-              this.getAccessTokenSilently().pipe(
+            concatMap<GetTokenOptions, Observable<string>>(() =>
+              this.getAccessToken().pipe(
                 catchError((err) => {
                   if (this.allowAnonymous(route, err)) {
                     return of('');
@@ -101,11 +101,11 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   }
 
   /**
-   * Duplicate of AuthService.getAccessTokenSilently, but with a slightly different return & error handling.
+   * Duplicate of AuthService.getAccessToken, but with a slightly different return & error handling.
    * Only used internally in the interceptor.
    *
    */
-  private getAccessTokenSilently(): Observable<string> {
+  private getAccessToken(): Observable<string> {
     return of(this.client).pipe(
       concatMap(async client => {
         return (await client.getAccessToken()) || "";
