@@ -13,11 +13,11 @@ export declare class AuthHttpInterceptor implements HttpInterceptor {
     constructor(configFactory: AuthClientConfig, client: Client, authState: AuthState, authService: AuthService);
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>;
     /**
-     * Duplicate of AuthService.getAccessTokenSilently, but with a slightly different return & error handling.
+     * Duplicate of AuthService.getAccessToken, but with a slightly different return & error handling.
      * Only used internally in the interceptor.
      *
      */
-    private getAccessTokenSilently;
+    private getAccessToken;
     /**
      * Strips the query and fragment from the given uri
      *

@@ -130,6 +130,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.4.0", ngImpor
                     args: [ClientService]
                 }] }]; } });
 
+;
 class AuthService {
     constructor(client, authState) {
         this.client = client;
@@ -155,7 +156,7 @@ class AuthService {
          */
         this.error$ = this.authState.error$;
         /**
-         * Emits the value (if any) that was passed to the `loginRedirect` method call
+         * Emits the value (if any) that was passed to the `loginWithRedirect` method call
          * but only **after** `handleRedirectCallback` is first called
          */
         this.appState$ = this.appStateSubject$.asObservable();
@@ -174,13 +175,13 @@ class AuthService {
     }
     /**
      * ```js
-     * loginRedirect();
+     * loginWithRedirect(options);
      * ```
      *
-     * Performs a redirect
+     * Performs a login via redirect
      */
-    loginRedirect() {
-        return from(this.client.loginRedirect());
+    loginWithRedirect(options) {
+        return from(this.client.loginRedirect(options));
     }
     /**
      * ```js
@@ -194,7 +195,7 @@ class AuthService {
     }
     /**
      * ```js
-     * getAccessTokenSilently().subscribe(token => ...)
+     * getAccessToken().subscribe(token => ...)
      * ```
      *
      * If there's a valid token stored, return it. Otherwise, opens an
@@ -204,7 +205,7 @@ class AuthService {
      * will be valid according to their expiration times.
      *
      */
-    getAccessTokenSilently() {
+    getAccessToken() {
         return of(this.client).pipe(concatMap(client => client.getAccessToken()), tap((access_token) => {
             if (access_token)
                 return this.authState.setAccessToken(access_token);
@@ -302,7 +303,7 @@ class AuthGuard {
     redirectIfUnauthenticated(state) {
         return this.auth.isAuthenticated$.pipe(tap((loggedIn) => {
             if (!loggedIn) {
-                this.auth.loginRedirect();
+                this.auth.loginWithRedirect({ redirect_uri: state.url });
             }
         }));
     }
@@ -366,9 +367,9 @@ class AuthHttpInterceptor {
         return this.findMatchingRoute(req, config.httpInterceptor).pipe(concatMap((route) => iif(
         // Check if a route was matched
         () => route !== null, 
-        // If we have a matching route, call getTokenSilently and attach the token to the
+        // If we have a matching route, call getToken and attach the token to the
         // outgoing request
-        of(route).pipe(waitUntil(isLoaded$), pluck('tokenOptions'), concatMap(() => this.getAccessTokenSilently().pipe(catchError((err) => {
+        of(route).pipe(waitUntil(isLoaded$), pluck('tokenOptions'), concatMap(() => this.getAccessToken().pipe(catchError((err) => {
             if (this.allowAnonymous(route, err)) {
                 return of('');
             }
@@ -388,11 +389,11 @@ class AuthHttpInterceptor {
         next.handle(req))));
     }
     /**
-     * Duplicate of AuthService.getAccessTokenSilently, but with a slightly different return & error handling.
+     * Duplicate of AuthService.getAccessToken, but with a slightly different return & error handling.
      * Only used internally in the interceptor.
      *
      */
-    getAccessTokenSilently() {
+    getAccessToken() {
         return of(this.client).pipe(concatMap(async (client) => {
             return (await client.getAccessToken()) || "";
         }), tap((access_token) => {

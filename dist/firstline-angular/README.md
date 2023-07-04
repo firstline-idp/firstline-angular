@@ -74,7 +74,7 @@ export class NavBarComponent {
   constructor(public auth: AuthService) { }
 
   loginWithRedirect() {
-    this.auth.loginRedirect();
+    this.auth.loginWithRedirect();
   }
 
   logout() {
@@ -125,7 +125,7 @@ export class ApiService {
 ### Protect a page
 
 Create a component `SecureComponent` with secure UI content. Add the following code to `app-routing.module.ts`.
-If you implemented everything correct, unauthenticated users can no longer access `/scured`.
+If you implemented everything correct, unauthenticated users can no longer access `/secured`.
 
 ```ts
 // app-routing.module.ts

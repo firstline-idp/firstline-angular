@@ -1,6 +1,6 @@
 {
   "name": "@first-line/firstline-angular",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Firstline SDK for Angular Single Page Applications (SPA)",
   "keywords": [
     "Firstline",
@@ -34,7 +34,7 @@
     "@angular/router": ">=13"
   },
   "dependencies": {
-    "@first-line/firstline-spa-js": "^1.0.2",
+    "@first-line/firstline-spa-js": "^1.0.4",
     "tslib": "^2.4.1"
   },
   "schematics": "./schematics/collection.json",

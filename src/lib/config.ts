@@ -13,7 +13,7 @@ export const enum HttpMethod {
   Head = 'HEAD',
 }
 
-export interface GetTokenSilentlyOptions { };
+export interface GetTokenOptions { };
 
 /**
  * Defines the type for a route config entry. Can either be:
@@ -78,7 +78,7 @@ export interface HttpInterceptorRouteConfig {
    * The options that are passed to the SDK when retrieving the
    * access token to attach to the outgoing request.
    */
-  tokenOptions?: GetTokenSilentlyOptions;
+  tokenOptions?: GetTokenOptions;
 
   /**
    * The HTTP method to match on. If specified, the HTTP method of
