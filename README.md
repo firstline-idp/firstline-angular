@@ -10,13 +10,14 @@ This library enables you to add authentication to your Angular app.
 
 ## Getting started
 
-### Setup Firstline Application & API
+### 1. Setup Firstline Application & API
+
 1. Follow the [Quick setup](https://docs.firstline.sh/quicksetup/angular) to configure a Firstline Application.
 2. Add a Firstline API as shown in [Secure API](https://docs.firstline.sh/secureapi).
 
 **Important:** Don't forget to configure the Application URIs.
 
-### Installation
+### 2. Installation
 
 Using npm:
 
@@ -32,7 +33,7 @@ yarn add @first-line/firstline-angular
 
 **Hint:** You can also try out our [Angular sample app](https://github.com/firstline-idp/sample-firstline-angular).
 
-### Configuration
+### 3. Configuration
 
 Add the following code to your Angular project. Replace **DOMAIN**, **API_IDENTIFIER** and **CLIENT_ID** with the settings you configured in the setup step. You can also find them in the Application's and API's "Configure" tab in your dashboard.
 
@@ -63,7 +64,7 @@ import { AuthModule } from '@first-line/firstline-angular';
 export class AppModule {}
 ```
 
-### Add login, logout, isAuthenticated & user
+### 4. Add login & logout to your application
 
 Implement the following component in your frontend and you have a fully functional login/logout.
 
@@ -114,7 +115,7 @@ You can use the auth variable to
 - check if the user is signed in
 - retrieve the logged in user
 
-### Make a secured backend call
+### 5. Make a secured backend call
 
 You now only need to implement the API call. Firstline will automatically inject an Authorization header into all API calls that have a URL starting with `API_URL` (that you configured above).
 
@@ -137,7 +138,7 @@ export class ApiService {
 
 In this example, we assume that the API endpoint http://localhost:8080/posts exists.
 
-### Protect a page
+### 6. Protect a page
 
 Create a component `SecureComponent` with secure UI content. Add the following code to `app-routing.module.ts`.
 If you have implemented everything correctly, unauthenticated users can no longer access `/secured`.
